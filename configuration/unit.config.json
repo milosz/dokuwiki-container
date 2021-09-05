@@ -1,0 +1,46 @@
+{
+  "listeners": {
+    "*:8080": {
+      "pass": "routes"
+    }
+  },
+  "routes": [
+    {
+      "match": {
+        "uri": [
+          "/data/*",
+          "/conf/*",
+          "/bin/*",
+          "/inc/*",
+          "/vendor/*"
+        ]
+      },
+      "action": {
+        "return": 404
+      }
+    },
+    {
+      "match": {
+        "uri": [
+          "/",
+          "*.php"
+        ]
+      },
+      "action": {
+        "pass": "applications/dokuwiki"
+      }
+    },
+    {
+      "action": {
+        "share": "/opt/dokuwiki/",
+      }
+    }
+  ],
+  "applications": {
+    "dokuwiki": {
+      "type": "php",
+      "root": "/opt/dokuwiki/",
+      "index": "doku.php"
+    }
+  }
+}
