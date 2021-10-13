@@ -14,12 +14,11 @@ LABEL maintainer Milosz Galazka <milosz@sleeplessbeastie.eu>
 LABEL build_date $BUILD_DATE
 LABEL application Dokuwiki
 
-COPY --from=source-code /opt/dokuwiki /opt/dokuwiki
+COPY --chown=$UID:$GID --from=source-code /opt/dokuwiki /opt/dokuwiki
 
 RUN apk add --no-cache shadow \
  && groupadd -r -g $GID  dokuwiki \
  && useradd --no-log-init -u $UID -r -g dokuwiki dokuwiki  \
- && chown -R dokuwiki:dokuwiki /opt/dokuwiki \
  && apk del shadow
 
 RUN apk add --no-cache unit-php7 php7-session php7-gd php7-xml php7-json php7-openssl
